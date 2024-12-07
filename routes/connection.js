@@ -2,9 +2,9 @@ var mysql = require("mysql");
 var util = require("util");
 
 var conn = mysql.createConnection({
-    "host":"localhost",
-    "user":"root",
-    "password":"",
+    "host":"bwbhldwydzajlkylvt2i-mysql.services.clever-cloud.com",
+    "user":"urh9qzgrwzh4mqcb",
+    "password":"FRFG300Uo8uL0It0cjHm",
     "database":"ultras_nodejs"
 });
 
