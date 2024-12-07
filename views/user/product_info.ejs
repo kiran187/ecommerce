@@ -1,0 +1,100 @@
+<%- include('navbar.ejs') %>
+<style>
+    .disabled{
+     background-color: aqua !important;
+    }
+</style>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+            <img src="/uploads/<%= products.product_image1 %>" width="100%" id="main_img"><br><br>
+            <img src="/uploads/<%= products.product_image1 %>" width="100px" onclick="main_img.src = this.src">
+            <% if (products.product_image2) { %>
+                <img src="/uploads/<%= products.product_image2 %>" width="100px" onclick="main_img.src = this.src">
+            <% } %>
+            <% if (products.product_image3) { %>
+                <img src="/uploads/<%= products.product_image3 %>" width="100px" onclick="main_img.src = this.src">
+            <% } %>
+            <% if (products.product_image4) { %>
+                <img src="/uploads/<%= products.product_image4 %>" width="100px" onclick="main_img.src = this.src">
+            <% } %>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-dark" style="border-radius: 50px;"><%= products.product_label %></button>
+            <h3 style="margin-left: 10px; color: black;">
+                <%= products.product_name %>
+            </h3>
+            Brand: <%= products.product_company %><br>
+            Color: <%= products.product_colors %><br><br>
+            <h3 id="product_price">
+                <% 
+                let active = 0;
+                let card_id;
+                for (let i = 0; i < product_pricing.length; i++) { 
+                    if (product_pricing[i].product_price > 0) { 
+                        active = i;
+
+                        card_card = product_pricing[i].card_id
+
+                        %>
+                        &#8377; <%= product_pricing[i].product_price %> &nbsp; &#8377; <del>
+                        <%= product_pricing[i].product_duplicate_price %> </del>
+                        <%
+                        break;
+                    }
+                } %>
+            </h3>
+            <% for (let i = 0; i < product_pricing.length; i++) { 
+                if (product_pricing[i].product_price > 0) { %> 
+                <button class="btn size_btn <%= (active != i) ? 'btn-outline-dark' : 'active_btn' %>"
+                        style="border-radius: 30px;"
+                        onclick="setprice('<%= product_pricing[i].product_price %>', this,
+                        '<%= product_pricing[i].product_duplicate_price %>',
+                        '<%= product_pricing[i].product_pricing_id %>','<%= product_pricing[i].card_id %>')">
+                    <%= product_pricing[i].product_size %> </del>
+                </button>
+                <% } 
+            } %>
+
+            <br>
+            
+            <button id="add_to_card_btn" onclick="add_to_cart()" class="<%=(card_card) ? 'disabled':''%> " <%=(card_card) ? 'disabled':''%>><i class="fa fa-shopping-cart"></i> &nbsp;&nbsp; Add to Cart </button>
+            <div><b style="color: black;">details:</b><%- products.product_details %></div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+<script>
+    var active_pricing_id = '<%= product_pricing[active].product_pricing_id %>'; // Initialize with active pricing ID
+
+    function setprice(price, elmt, duplicate_price, pricing_id,card_id) {
+        active_pricing_id = pricing_id;
+        document.getElementById("product_price").innerHTML = `&#8377;${price} &nbsp; &nbsp;
+        <del>&#8377;${duplicate_price}</del>`;
+        document.querySelectorAll(".size_btn").forEach(function(btn) {
+            btn.classList.add("btn-outline-dark");
+            btn.classList.remove("active_btn");
+        });
+        elmt.classList.remove("btn-outline-dark");
+        elmt.classList.add("active_btn");
+
+        if(card_id){
+            $("#add_to_card_btn").attr("disabled","true");
+            $("#add_to_card_btn").addClass("disabled");
+        }
+        else{
+            $("#add_to_card_btn").removeAttr("disabled")
+            $("#add_to_card_btn").removeClass("disabled")
+        }
+    }
+
+    function add_to_cart() {
+         // Corrected variable name
+        url = `/add_to_card/<%= products.product_id %>/`+active_pricing_id;
+        //window.open(url);
+        location.href = url;
+        // console.log(active_pricing_id);
+    }
+</script>
+<%- include("footer.ejs") %>

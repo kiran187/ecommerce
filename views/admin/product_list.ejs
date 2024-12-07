@@ -1,0 +1,62 @@
+<%-include("navbar.ejs")%>
+<div class="container-fluid bg-white p-4">
+    <div class="row">
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            
+            <h3>product list </h3>
+        </div>
+        <div class="mb-3 col-md-12">
+            <table class="table table-brodered">
+                <tr>
+                    <th width="10%">action</th>
+                    <th>sr.no</th>
+                    <th>product name</th>
+                    <th>company</th>
+                    <th>color</th>
+                    <th>laber</th>
+                    <th>price range</th>
+                    
+                </tr>
+                <% for(var i=0;i<products.length;i++){%>
+<tr>
+    <td>
+
+        
+
+        <a href="/admin/view_product/<%=products[i].product_id%>"><button class="btn btn-primary p-0 pl-1
+            pr-1 mi-2"><i class="fa fa-print"></i></button></a>
+        
+
+    <a href="/admin/edit_product/<%=products[i].product_id%>"><button class="btn btn-secondary p-0 pl-1
+        pr-1 ml-2"><i class="fa fa-edit"></i></button></a>
+
+        <a href="/admin/delete_product/<%=products[i].product_id%>"><button class="btn btn-danger p-0 pl-1
+            pr-1 ml-2" onclick="return confirm('Are you sure..?')"><i class="fa fa-trash"></i></button></a>
+
+
+
+
+
+
+    </td>
+    <td><%=i+1%></td>
+    
+    <td><%=products[i].product_name%></td>
+    <td><%=products[i].product_company%></td>
+    <td><%=products[i].product_colors%></td>
+    <td><%=products[i].product_label%></td>
+    <td>&#8377;<%=products[i].min_price%> - <%=products[i].max_price%></td>
+    
+</tr>
+                    <% } %>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+ <%-include ("footer.ejs")%>

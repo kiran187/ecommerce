@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h1 {
+  color: #333;
+}
+
+.cart table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.cart th, .cart td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.cart th {
+  background-color: #f4f4f4;
+}
+
+.product {
+  display: flex;
+  align-items: center;
+}
+
+.product img {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+}
+
+.product span {
+  font-weight: bold;
+  color: #333;
+}
+
+input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  text-align: center;
+}
+
+.remove {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.remove:hover {
+  background-color: #c00;
+}
+
+.subtotal {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+  align-items: center;
+}
+
+.checkout-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.checkout-btn:hover {
+  background-color: #218838;
+}
+
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Your script that depends on jQuery should be loaded after -->
+  <script src="path/to/your/script.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Shopping Cart</h1>
+    </header>
+
+    <main>
+      <div class="cart">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(var i=0; i<card.length;i++) {%> 
+            <tr>
+              <td>
+                <div class="product">
+                  <img src="/uploads/<%=card[i].product_image1%>" alt="<%=card[i].product_name%>">
+                  <span><%=card[i].product_name%></span>
+                  
+                  
+                </div>
+                <br>
+               <h5 style="margin-left: 70px;">product size = <span><%=card[i].product_size%></span></h5>
+               <h5 style="margin-left: 70px;">product color = <span><%=card[i].product_colors%></span></h5>
+              </td>
+              <td>&#8377;<span id="product_rate<%=card[i].card_id%>"><%=card[i].product_price%></span></td>
+              <td>
+                <button style="font-size: 20px; margin-right: 20px;" onclick="increase_qty('<%=card[i].card_id%>')">+</button>
+                <input type="number" disabled value="<%=card[i].qty%>" min="1" id="qty_input<%=card[i].card_id%>">
+                <button  style="font-size: 20px; margin-left: 20px;" onclick="decrease_qty('<%=card[i].card_id%>','qty_input<%=card[i].card_id%>')">-</button>
+              </td>
+              <td>&#8377; <span class="product_total" id="product_total<%=card[i].card_id%>"><%=card[i].product_price*card[i].qty %></span></td>
+              <td><button class="remove">X</button></td>
+            </tr>
+
+            <% } %>
+            <!-- <tr>
+              <td>
+                <div class="product">
+                  <img src="https://via.placeholder.com/100" alt="Product 2">
+                  <span>Product 2</span>
+                </div>
+              </td>
+              <td>$15.00</td>
+              <td>
+                <button style="font-size: 20px; margin-right: 20px;">+</button>
+                <input type="number" disabled  value="1" min="1">
+                <button  style="font-size: 20px; margin-left: 20px;">-</button>
+              </td>
+              <td>$15.00</td>
+              <td><button class="remove">X</button></td>
+            </tr> -->
+          </tbody>
+        </table>
+        
+        <div class="subtotal">
+          <div class="total">
+            <p><strong>Subtotal:</strong> $40.00</p>
+            <button class="checkout-btn">Proceed to Checkout</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script>
+    function increase_qty(card_id){
+
+      var elmt = document.getElementById("qty_input"+card_id);
+      elmt.value = Number(elmt.value)+1;
+
+     var qty = elmt.value;
+    var rate =  document.getElementById("product_rate"+card_id).innerHTML;
+    var total = qty*rate;
+    document.getElementById("product_total"+card_id).innerHTML= total;
+
+
+      jQuery.noConflict();
+jQuery(document).ready(function($) {
+  // Your code here using $ as jQuery
+  $.ajax({
+    "url": "/increace_qty_in_backend",
+    "data": {"card_id": card_id},
+    "type": "post"
+  }).done(function(res) {
+    console.log(res);
+  });
+});
+
+     
+
+    }
+
+    function decrease_qty(card_id,card_qty_inp_box){
+
+var elmt = document.getElementById(card_qty_inp_box);
+if(Number(elmt.value) > 1){
+  elmt.value = Number(elmt.value)-1;
+  jQuery.noConflict();
+jQuery(document).ready(function($) {
+  // Your code here using $ as jQuery
+  $.ajax({
+    "url": "/decrease_qty_in_backend",
+    "data": {"card_id": card_id},
+    "type": "post"
+  }).done(function(res) {
+    console.log(res);
+  });
+});
+}
+
+
+
+
+
+}
+  </script>
+</body>
+</html>
+

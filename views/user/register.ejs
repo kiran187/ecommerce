@@ -1,0 +1,40 @@
+<%-include("navbar.ejs")%>
+<form action="/do_register" method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-md-6">
+                <div style="border: 1px solid black ; padding: 20px; text-align: center;">
+                    <h3>Create Account , </h3>
+                    Enter Name<br>
+                    <input type="text" name="customer_name" class="form-control" style="width: 100%;">
+                    <br>
+                    Enter Mobile<br>
+                    <input type="number" name="customer_mobile" class="form-control" style="width: 100%;">
+                    <br>
+                    Enter Email<br>
+                    <input type="email" name="customer_email" class="form-control" style="width: 100%;">
+                    <br>
+                    Enter Password<br>
+                    <input type="password" name="customer_password" class="form-control" style="width: 100%;">
+                    <br>
+                    <button>Register </button>
+                    <br>
+                    <a href="/register">New User, Create Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    </form>
+    <!--
+    CREATE TABLE customers (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_name VARCHAR(255) NOT NULL,
+    customer_mobile VARCHAR(15) NOT NULL,
+    customer_email VARCHAR(255) UNIQUE NOT NULL,
+    customer_password VARCHAR(255) NOT NULL
+);
+    -->
+<%-include("footer.ejs")%>
+

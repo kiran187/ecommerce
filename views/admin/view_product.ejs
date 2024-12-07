@@ -1,0 +1,87 @@
+<h1>welcome</h1>
+
+<%-include("navbar.ejs")%>
+
+<div class="container-fluid bg-white p-4">
+    <div class="row">
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            
+            <h3>product information </h3>
+        </div>
+        <div class="col-md-4 mb-3">
+            <small>product name</small>
+            <h4 class="ml-3"><%=product_info.product_name%></h4>
+        </div>
+        <div class="col-md-4 mb-3">
+            <small>product company</small>
+            <h4><%=product_info.product_company%></h4>
+        </div>
+        <div class="col-md-4 mb-3">
+            <small>product colors</small>
+            <h4><%=product_info.product_colors%></h4>
+        </div>
+        <div class="col-md-4 mb-3">
+            <small>product label</small>
+            <h4><%=product_info.product_label%></h4>
+        </div>
+        <% for(var i=0;i<pricing.length;i++) {%>  
+
+            <div class="col-md-4 mb-3">
+
+            <small><%=pricing[i].product_size%> -size</small>
+            <h4 class="pl-3"> &#8377;<%=pricing[i].product_price%> <del> &#8377;<%=pricing[i].product_duplicate_price%></del>
+            </h4>
+        </div>
+              <% } %> 
+
+    <div class="col-md-12 mb-3">
+        <small style="margin-left: 50px;">product details </small>
+        <h4><%-product_info.product_details%></h4>
+    </div>
+    <div class="col-md-4">
+        
+            <small class="mb-3">product image_1</small><br>
+            <img src="/uploads/<%=product_info.product_image1%>" width="200px">
+       
+    </div>
+    <div class="col-md-4">
+        
+        <small class="mb-3">product image_2</small><br>
+        <img src="/uploads/<%=product_info.product_image2%>" width="200px">
+   
+</div>
+<% if(product_info.product_image3) {%>
+    
+    <div class="col-md-4">
+        
+        <small class="mb-3">product image_3</small><br>
+        <img src="/uploads/<%=product_info.product_image3%>" width="200px">
+   
+</div> <% } %>
+<% if(product_info.product_image4) {%>
+    
+    <div class="col-md-4">
+        
+        <small class="mb-3">product image_4</small><br>
+        <img src="/uploads/<%=product_info.product_image4%>" width="200px">
+   
+</div> <% } %>
+    
+   
+</div>
+</div>
+</div>
+            
+
+           
+
+            
+
+            
+              
+
+              
+            
+<%- include("footer.ejs")%>

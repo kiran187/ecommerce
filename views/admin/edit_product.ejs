@@ -1,0 +1,136 @@
+
+<%-include("navbar.ejs")%>
+<form action="/admin/admin/update_product" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="product_id" value="<%=product_info.product_id%>">
+<div class="container-fluid bg-white p-4">
+    <div class="row">
+<div class="col-md-8">
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            
+            <h3>Add product</h3>
+        </div>
+        <div class="col-md-6 mb-3">
+            
+           producr name*
+           <input type="text" name="product_name" value="<%=product_info.product_name%>" class="form-control" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            
+            product company*
+            <input type="text" name="product_company" value="<%=product_info.product_company%>" class="form-control" required list="company_names">
+            <datalist id="company_names">
+                <option value="">cotton candy</option>
+                <option value="">Adidas</option>
+                <option value="">nike</option>
+                <option value="">peter England</option>
+            </datalist>
+         </div>
+         <div class="col-md-6 mb-3">
+            
+            product colors* <small>(seperste with comma)</small>
+            <input type="text" name="product_colors" value="<%=product_info.product_colors%>" class="form-control" required>
+         </div>
+
+         <div class="col-md-6 mb-3">
+            
+            product lebel 
+            <select name="product_label"  class="form-control">
+                
+                <option <%= (product_info.producr_label == 'trending') ? 'select':'' %>>trending</option>
+                <option <%= (product_info.producr_label == 'featured') ? 'select':'' %>>featured</option>
+                <option <%= (product_info.producr_label == 'flash') ? 'select':'' %>>flash</option>
+            </select>
+         </div>
+
+         <div class="col-md-4 mb-4">
+            
+            product image 1*<small>(main image)</small>
+            <input type="file" name="product_image1"  class="form-control" required accept="image/*">
+         </div>
+         <div class="mb-3 col-md-2">
+            <img src="/uploads/<%=product_info.product_image1%>" width="200px">
+         </div>
+         <div class="col-md-4 mb-3">
+            
+            product image 2* 
+            <input type="file" name="product_image2" class="form-control" required accept="image/*">
+         </div>
+         <div class="col-md-2 mb-3">
+            <img src="/uploads/<%=product_info.product_image2%>" width="200px">
+         </div>
+
+         <div class="col-md-4 mb-3">
+            
+            product image 3 
+            <input type="file" name="product_image3" class="form-control"  accept="image/*">
+         </div>
+         <div class="col-md-2 mb-3">
+            <img src="/uploads/<%=product_info.product_image3%>" width="200px">
+         </div>
+
+         <div class="col-md-4 mb-3">
+            
+            product image 4 
+            <input type="file" name="product_image4" class="form-control"  accept="image/*">
+         </div>
+         
+<div class="col-md-2 mb-3">
+    <img src="/uploads/<%=product_info.product_image4%>" width="200px">
+</div>
+         
+
+        
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                
+                <h3> product pricing</h3>
+            </div>
+            <div class="col-md-12 mb-3">
+                <table class="table table-brodered table-sm table-striped">
+<tr>
+    <th>product size</th>
+    <th>product price</th>
+    <th>product duplicate price</th>
+</tr>
+
+<% 
+ 
+ 
+for(var i=0;i<pricing.length;i++){%>
+<tr>
+    
+    <td>
+        <input type="hidden" name="product_pricing_id" value="<%=pricing[i].product_pricing_id%>">
+        <input type="text" name="product_size" value="<%=pricing[i].product_size%>" class="form-control"></td>
+    <td><input type="number" name="product_price" class="form-control text-right" value="<%=pricing[i].product_price%>"></td>
+    <td><input type="number" name="product_duplicate_price" class="form-control text-right" value="<%=pricing[i].product_duplicate_price%>"></td>
+   
+</tr>
+<% } %>
+                </table>
+                
+            </div>
+    
+</div>
+
+    </div>
+    
+</div>
+<div class="col-md-12 mb-3">
+            
+    product_ditails
+    <textarea name="product_details" class="form-control"  rows="5" id="editor"><%-product_info.product_details%></textarea>
+ </div>
+ <div class="col-md-12 mb-3 text-center" >
+            
+    <button class="btn btn-primary"> save product</button>
+ </div>
+</div></div></form>
+
+<%-include ("footer.ejs")%>
+
