@@ -147,7 +147,7 @@ router.post("/do_login",async function(req,res){
 
     }
 
-    var data=await exe(sql);
+    //var data=await exe(sql);
    // res.send(data);
 });
 
